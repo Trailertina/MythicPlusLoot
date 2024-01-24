@@ -1,0 +1,8 @@
+## Interface: 100205
+## Title: MythicPlusLoot
+## Author: Trailertina-Ravencrest
+## Version: 0.8 Beta
+## SavedVariables: MythicPlusLootDB
+
+MythicPlusLoot.lua
+FirstLogin.lua
