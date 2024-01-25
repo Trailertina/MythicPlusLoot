@@ -76,29 +76,27 @@ end
 
 -- Function to update the loot window with the latest loot information for all group members
 function LootAddonFrame:UpdateLootWindow()
-    if LootAddonFrame.LootWindow and LootAddonFrame.LootWindow:IsShown() then
-        -- Close and nil the existing loot window
-        LootAddonFrame.LootWindow:Hide()
-        LootAddonFrame.LootWindow = nil
+    if not LootAddonFrame.LootWindow or not LootAddonFrame.LootWindow:IsShown() then
+        return
     end
+    
+    -- Clear the existing loot window's contents
+    LootAddonFrame.LootWindow:Hide()  -- Hide the window to prevent flickering
 
-    -- Create a new loot window
-    LootAddonFrame.LootWindow = CreateFrame("Frame", "LootAddonFrame_LootWindow", UIParent, "UIPanelDialogTemplate")
-    LootAddonFrame.LootWindow:SetSize(250, 300)
-    LootAddonFrame.LootWindow:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 10, -10)
-    LootAddonFrame.LootWindow.title = LootAddonFrame.LootWindow:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-    LootAddonFrame.LootWindow.title:SetPoint("TOP", LootAddonFrame.LootWindow, "TOP", 0, -10)
-    LootAddonFrame.LootWindow.title:SetText("MythicPlusLoot")
-
-    -- Make the loot window draggable
-    LootAddonFrame.LootWindow:SetMovable(true)
-    LootAddonFrame.LootWindow:EnableMouse(true)
-    LootAddonFrame.LootWindow:RegisterForDrag("LeftButton")
-
-    -- Set script for dragging
-    LootAddonFrame.LootWindow:SetScript("OnDragStart", LootAddonFrame.LootWindow.StartMoving)
-    LootAddonFrame.LootWindow:SetScript("OnDragStop", LootAddonFrame.LootWindow.StopMovingOrSizing)
-
+    -- Iterate over the loot window's dynamic content and hide text (FontString), excluding the header
+	for _, child in ipairs({LootAddonFrame.LootWindow:GetRegions()}) do
+		if child and child:IsObjectType("FontString") and child ~= LootAddonFrame.LootWindow.title then
+			child:Hide()
+		end
+	end
+	
+	-- Clear the existing loot window's whisper button while preserving other child frames
+	for _, child in ipairs({LootAddonFrame.LootWindow:GetChildren()}) do
+		if child and child:IsObjectType("Button") and child:GetText() == "Whisper" then
+			child:Hide()
+		end
+	end
+   
     local yOffset = 30  -- Starting y offset
 
     for playerName, lootList in pairs(lootHistory) do
