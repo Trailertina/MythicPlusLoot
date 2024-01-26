@@ -192,34 +192,43 @@ end
 
 -- Event handler for CHAT_MSG_LOOT
 function LootAddonFrame:CHAT_MSG_LOOT(...)
-	if inMythicPlusDungeon then
+  	if inMythicPlusDungeon then	  
         local message, _, _, _, _, _, _, _, _, _, _, guid = ...
         --print("Loot message received:", message)
 
         local playerName, itemLink = string.match(message, "^([^%s]+) receives loot: (.+)$")
-        
+
         -- Handle self-loot for testing(uncomment when testing)
         --if not playerName then
             --playerName = UnitName("player")
             --if string.find(message, "You receive loot: ") then
                 --itemLink = string.match(message, "You receive loot: (.+)")
-            --end
+           --end
         --end
 
         if playerName and itemLink then
-            --print("Player:", playerName)
-            --print("Item:", itemLink)
+            local _, _, _, _, _, _, _, _, equipSlot = GetItemInfo(itemLink)
 
-            -- Store loot information for the player
-            lootHistory[playerName] = lootHistory[playerName] or {}
-            table.insert(lootHistory[playerName], itemLink)
+            -- Check if the item is a gear, finger, trinket, weapon, or off-hand
+            if equipSlot == "INVTYPE_HEAD" or equipSlot == "INVTYPE_NECK" or equipSlot == "INVTYPE_SHOULDER"
+                or equipSlot == "INVTYPE_BODY" or equipSlot == "INVTYPE_CHEST" or equipSlot == "INVTYPE_ROBE"
+                or equipSlot == "INVTYPE_WAIST" or equipSlot == "INVTYPE_LEGS" or equipSlot == "INVTYPE_FEET"
+                or equipSlot == "INVTYPE_WRIST" or equipSlot == "INVTYPE_HAND" or equipSlot == "INVTYPE_FINGER"
+                or equipSlot == "INVTYPE_TRINKET" or equipSlot == "INVTYPE_CLOAK" or equipSlot == "INVTYPE_WEAPON"
+                or equipSlot == "INVTYPE_SHIELD" or equipSlot == "INVTYPE_2HWEAPON" or equipSlot == "INVTYPE_WEAPONMAINHAND"
+                or equipSlot == "INVTYPE_WEAPONOFFHAND" or equipSlot == "INVTYPE_HOLDABLE" or equipSlot == "INVTYPE_RANGED" then
 
-            -- Update the loot window with the latest loot information for all group members
-            self:UpdateLootWindow()
+                -- Store loot information for the player
+                lootHistory[playerName] = lootHistory[playerName] or {}
+                table.insert(lootHistory[playerName], itemLink)
 
-            -- Clear the chat message to prevent it from being printed
-            return true
+                -- Update the loot window with the latest loot information for all group members
+                self:UpdateLootWindow()
+            end
         end
+
+        -- Clear the chat message to prevent it from being printed
+        return true
     end
 end
 
@@ -233,3 +242,4 @@ SlashCmdList["MYTHICPLUSLOOT"] = function()
         LootAddonFrame:OpenLootWindow()
     end
 end
+
