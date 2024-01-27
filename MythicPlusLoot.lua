@@ -43,7 +43,9 @@ function LootAddonFrame:CHALLENGE_MODE_START(...)
 	self:UpdateLootWindow()
 	
 	-- Hide loot frame, otherwise it will show when calling updatelootwindow
-	LootAddonFrame.LootWindow:Hide()
+	if LootAddonFrame.LootWindow then
+		LootAddonFrame.LootWindow:Hide()
+	end
 	
 	print("New M+ registered - Previous loot cleared.")
 end
@@ -253,8 +255,3 @@ SlashCmdList["MYTHICPLUSLOOT"] = function()
     end
 end
 
--- Slash command handler
---SLASH_CHALLENGE_MODE_START1 = "/simm"
---SlashCmdList["CHALLENGE_MODE_START"] = function()
-    --LootAddonFrame:CHALLENGE_MODE_START()
---end
