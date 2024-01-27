@@ -30,12 +30,12 @@ frame:SetScript("OnEvent", function(self, event, addon)
             -- Create a fontString to display the message
             local messageText = messageFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
             messageText:SetText("THANK YOU FOR CHOOSING MYTHICPLUSLOOT")
-            messageText:SetPoint("CENTER", 0, 50)
+            messageText:SetPoint("CENTER", 0, 55)
 			
 			-- Create a fontString to display the message
             local messageText = messageFrame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-            messageText:SetText("This addon is a beta version with known bugs/functionality issues\n\nI hope you find it useful anyway!\n\nHappy grinding my friends :D\n\n(Please check the README file for known bugs)")
-            messageText:SetPoint("CENTER", 0, -22)
+            messageText:SetText("I hope your lazy ass find this useful :D\n\nHappy grinding my friends\n\n**Persisting issues in current version**\n- Loot frame position not saved from previous session\n- Hold SHIFT before hovering to compare items in the loot frame")
+            messageText:SetPoint("CENTER", 0, -20)
 
             -- Create a close button
             local closeButton = CreateFrame("Button", nil, messageFrame, "UIPanelCloseButton")
