@@ -1,19 +1,21 @@
-This version is in beta!
-
 I've tried to make a simple addon that easily tracks loot in M+ dungeons.
 Why? Because I'm too lazy to look though chat, find correct person and manually filter their loot for the item I want to inspect.
 This addon only shows gear and weapons in the loot frame.
 
 
 Future improvements:
+- Fix bugs/issues.
 - Only show loot equippable by class.
 
 
 Known bugs/issues:
-- Players not looting anything relevant sometimes shows up in loot frame anyway (looting sparks, gold etc.).
 - Loot frame position not saved from previous session and resets each time you log-in or use /reload.
+- Comparing items only works while holding down the SHIFT-key BEFORE hovering mouse over items in the loot frame.
 
-Bug fixes as of 25-01-2024:
+
+
+
+Bug fixes as of 27-01-2024:
 
 Header Hiding:
 Issue: Loot window's header unintentionally hidden with other dynamic content during FontString element hiding.
@@ -43,9 +45,14 @@ Impact: Ensures cleaner and more organized loot history display without unnecess
 Group Exit Lua Error:
 Issue: Opening the loot frame after leaving a group or after group members left caused a Lua error.
 Fix: Implemented code to handle group exit scenarios gracefully and prevent Lua errors.
-Impact: Eliminates Lua errors during loot frame opening after leaving a group, ensuring a smoother user experience.
+Impact: Eliminates Lua errors by hiding non-group members data during loot frame opening after leaving a group, ensuring a smoother user experience.
 
 Previous Run Loot Display:
 Issue: Loot frame displayed loot from the previous run, without resetting.
 Fix: Updated the code to reset the loot frame when starting a new Mythic+ run.
 Impact: Ensures that the loot frame accurately reflects the loot from the current run and prevents display of outdated information from previous runs.
+
+Showing Playernames With No Loot:
+Issue: Loot window displayed playernames who hadn't looted equippable items (e.g., gold or trash items).
+Fix: Modified the 'CHAT_MSG_LOOT' event handler to filter out non-equippable items before storing loot information in the lootHistory table.
+Impact: Enhances the loot window's accuracy by excluding players who haven't looted items of interest.
