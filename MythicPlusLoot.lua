@@ -55,6 +55,12 @@ function LootAddonFrame:CHALLENGE_MODE_COMPLETED(...)
     -- Code for CHALLENGE_MODE_COMPLETED event
     if inMythicPlusDungeon then
         self:OpenLootWindow()
+		
+		-- Set a timer to reset inMythicPlusDungeon to false after 2 minute
+        C_Timer.After(120, function()
+            inMythicPlusDungeon = false
+            --print("M+ concluded.")
+        end)
     end
 end
 
@@ -254,4 +260,3 @@ SlashCmdList["MYTHICPLUSLOOT"] = function()
         LootAddonFrame:OpenLootWindow()
     end
 end
-
