@@ -56,3 +56,14 @@ Showing Playernames With No Loot:
 Issue: Loot window displayed playernames who hadn't looted equippable items (e.g., gold or trash items).
 Fix: Modified the 'CHAT_MSG_LOOT' event handler to filter out non-equippable items before storing loot information in the lootHistory table.
 Impact: Enhances the loot window's accuracy by excluding players who haven't looted items of interest.
+
+Not resetting Mythic Plus Flag:
+Issue: Addon would be set to be in a M+ all the time after completing first M+ of the day.
+Fix: Introduced a resetting of M+ conditions of the addon 2 minutes after completing a M+.
+Impact: Makes a smoother flow of the addon and eliminates possibility of showing loot even when not in a M+.
+
+
+
+Known bugs/issues:
+Loot frame position not saved from previous session and resets each time you log-in or use /reload.
+Comparing items only works while holding down the SHIFT-key BEFORE hovering mouse over items in the loot frame.
